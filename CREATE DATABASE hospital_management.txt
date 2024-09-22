@@ -1,0 +1,244 @@
+                    <form action="{{ url_for('delete_user', user_id=user.id) }}" method="post">
+                        <button type="submit">Delete</button>
+                    </form>
+
+                <td>
+                    <form action="{{ url_for('delete_patient', patient_id=patient.id) }}" method="post">
+                        <button type="submit">Discharge</button>
+                    </form>
+                </td>
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin_dashboard.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Admin Dashboard</h1>
+    </header>
+    <main>
+        <section>
+            <h2>Patients</h2>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Ward</th>
+                    <th>Bed Number</th>
+                    <th>Disease</th>
+                    <th>Assigned Doctor</th>
+                </tr>
+                {% for patient in patients %}
+                <tr>
+                    <td>{{ patient.id }}</td>
+                    <td>{{ patient.name }}</td>
+                    <td>{{ patient.age }}</td>
+                    <td>{{ patient.ward }}</td>
+                    <td>{{ patient.bed_number }}</td>
+                    <td>{{ patient.disease }}</td>
+                    <td>{{ patient.assigned_doctor }}</td>
+                    <td>
+                    	<form action="{{ url_for('delete_patient', patient_id=patient.id) }}" method="post">
+                        	<button type="submit">Discharge</button>
+                    	</form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </section>
+        
+        <section>
+            <h2>Doctors</h2>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                </tr>
+                {% for doctor in doctors %}
+                <tr>
+                    <td>{{ doctor.id }}</td>
+                    <td>{{ doctor.username }}</td>
+                    <td>
+                    	<form action="{{ url_for('delete_user', user_id=user.id) }}" method="post">
+                        	<button type="submit">Delete</button>
+                    	</form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </section>
+
+        <section>
+            <h2>Nurses</h2>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                </tr>
+                {% for nurse in nurses %}
+                <tr>
+                    <td>{{ nurse.id }}</td>
+                    <td>{{ nurse.username }}</td>
+                    <td>
+                    	<form action="{{ url_for('delete_user', user_id=user.id) }}" method="post">
+                        	<button type="submit">Delete</button>
+                    	</form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </section>
+
+        <section>
+            <h2>Admins</h2>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                </tr>
+                {% for admin in admins %}
+                <tr>
+                    <td>{{ admin.id }}</td>
+                    <td>{{ admin.username }}</td>
+                    <td>
+                    	<form action="{{ url_for('delete_user', user_id=user.id) }}" method="post">
+                        	<button type="submit">Delete</button>
+                    	</form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </section>
+
+        <a href="{{ url_for('logout') }}" class="button">Logout</a>
+        <a href="{{ url_for('add_patient') }}">Add Patient</a>
+        <a href="{{ url_for('add_staff') }}">Add Staff</a>
+    </main>
+</body>
+</html>
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin_dashboard.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Welcome, {{ user.username }}!</h1>
+    </header>
+    <main class="admin-dashboard">
+        <div class="table-container">
+            <h2>Patients</h2>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Ward</th>
+                    <th>Bed Number</th>
+                    <th>Disease</th>
+                    <th>Assigned Doctor</th>
+                </tr>
+                {% for patient in patients %}
+                <tr>
+                    <td>{{ patient.id }}</td>
+                    <td>{{ patient.name }}</td>
+                    <td>{{ patient.age }}</td>
+                    <td>{{ patient.ward }}</td>
+                    <td>{{ patient.bed_number }}</td>
+                    <td>{{ patient.disease }}</td>
+                    <td>{{ patient.assigned_doctor }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        
+        <div class="table-container">
+            <h2>Doctors</h2>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Action</th>
+                </tr>
+                {% for doctor in doctors %}
+                <tr>
+                    <td>{{ doctor.id }}</td>
+                    <td>{{ doctor.username }}</td>
+                    <td>
+                        <form action="{{ url_for('delete_user', role='doctor', user_id=doctor.id) }}" method="post">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <div class="table-container">
+            <h2>Nurses</h2>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Action</th>
+                </tr>
+                {% for nurse in nurses %}
+                <tr>
+                    <td>{{ nurse.id }}</td>
+                    <td>{{ nurse.username }}</td>
+                    <td>
+                        <form action="{{ url_for('delete_user', role='nurse', user_id=nurse.id) }}" method="post">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <div class="table-container">
+            <h2>Admins</h2>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Action</th>
+                </tr>
+                {% for admin in admins %}
+                <tr>
+                    <td>{{ admin.id }}</td>
+                    <td>{{ admin.username }}</td>
+                    <td>
+                        <form action="{{ url_for('delete_user', role='admin', user_id=admin.id) }}" method="post">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </main>
+</body>
+</html>
+
+        <a href="{{ url_for('logout') }}" class="button">Logout</a>
+        <a href="{{ url_for('add_patient') }}">Add Patient</a>
+        <a href="{{ url_for('add_staff') }}">Add Staff</a>
